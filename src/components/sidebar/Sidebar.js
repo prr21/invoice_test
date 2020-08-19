@@ -5,7 +5,7 @@ import './sidebar.sass'
 
 function Sidebar(){
 
-  const [opened, openClose] = useState(true);
+  const [opened, openClose] = useState(false);
 
   const style = opened
     ? {'transform': 'translate(0, 0)'}
@@ -21,7 +21,7 @@ function Sidebar(){
       </span>
 
       <div className="sidebar__content">
-        
+
       </div>
 
     </div>
