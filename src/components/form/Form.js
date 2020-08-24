@@ -1,82 +1,114 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { Redirect } from 'react-router-dom'
 
-import { validPassword, checkLoginForExist } from '../../utils/validate'
+import { validPassword, checkUsernameForExist } from '../../utils/validate'
 import './form.sass'
 
 function Form({ logged, logIn }){
 
-  const [userStatus, sendUserStatus] = useState({value: ''})
-  const [passwordStatus, sendPasswordStatus] = useState({value: ''})
+  const [usernameStatus, setUsernameStatus] = useState({value: ''})
+  const [passwordStatus, setPasswordStatus] = useState({value: ''})
+
+  const usernameInp = useRef(null)
+  const passwordInp = useRef(null)
+
+  useEffect(() => {
+    if (usernameStatus.exist) {
+      setSuccess(usernameInp)
+
+    } else if (usernameStatus.errorMsg){
+      setError(usernameInp)
+    } 
+
+  }, [usernameStatus])
+
+  useEffect(() => {
+    if (passwordStatus.valid){
+      setSuccess(passwordInp)
+      
+    } else if (passwordStatus.errorMsg){
+      setError(passwordInp)
+    } 
+
+  }, [passwordStatus])
+
 
   const submitHandler = async event => {
     event.preventDefault()
 
-    const userResponse = await checkLoginForExist(userStatus.value)
-    
-    if (userResponse.exist && passwordStatus.valid){
-      logIn(userResponse.userData)
+    const potentialUser = await checkUsernameForExist(usernameStatus.value)
+    setUsernameStatus(potentialUser)
+
+    if (potentialUser.exist && passwordStatus.valid){
+      logIn(potentialUser.userData)
     }
-    sendUserStatus(userResponse)
   }
 
-  const loginHandler = event => {
+  // Валидация логина только при submit
+  const usernameHandler = event => {
     const value = event.target.value
-    sendUserStatus({value})
+    setUsernameStatus({value})
   }
 
   const passwordHandler = event => {
     const value = event.target.value
     const response = validPassword(value)
-
-    if (response.valid){
-      response.password = value
-    }
-    sendPasswordStatus(response)
+    setPasswordStatus(response)
   }
 
   if (logged) return <Redirect to="/"/>
-
+  
   return (
     <div className="content-center">
       <form className="form-signin" onSubmit={submitHandler}>
 
         <div className="form-group">
-          <label htmlFor="login">Github Login</label>
+          <label>Github Login</label>
           <input
             required
-            type="text" id="login"
-            className="form-control" 
-            onChange={loginHandler}/>
-          <small id="password" className="form-text text-danger">
-            {userStatus.errorMsg}
-          </small>
+            type="text"
+            className="form-control"
+            ref={usernameInp}
+            onChange={usernameHandler}
+          />
+          <div className="invalid-feedback">
+            {usernameStatus.errorMsg}
+          </div>
         </div>
         
         <div className="form-group">
-          <label htmlFor="password">Пароль</label>
+          <label>Пароль</label>
           <input
             required
+            type="password"
             className="form-control" 
-            type="password" id="password"
+            ref={passwordInp}
             onChange={passwordHandler}
           />
-          <small id="password" className="form-text text-danger">
+          <div className="invalid-feedback">
             {passwordStatus.errorMsg}
-          </small>
+          </div>
         </div>
         
         <div className="text-center">
-          <button 
-            type="submit" 
-            className="btn btn-primary">
-              Войти
+          <button type="submit" className="btn btn-primary">
+            Войти
           </button>
         </div>
 
       </form>
     </div>
   )
+}
+
+function setError(ref){
+  ref.current.classList.add('is-invalid')
+  ref.current.classList.remove('is-valid')
+}
+
+function setSuccess(ref){
+  ref.current.classList.remove('is-invalid')
+  ref.current.classList.add('is-valid')
 }
 
 export default Form
