@@ -25,7 +25,7 @@ export const validPassword = password => {
   return status
 }
 
-export const checkLoginForExist = async (login) => {
+export const checkUsernameForExist = async (login) => {
   const status = {
     value: login,
     exist: false
