@@ -6,7 +6,9 @@
   transition: .5s
   width: 350px
   height: 100%
-  background-color: #c1c1c1c7
+  z-index: 5
+  background-color: #eadeff9e
+  border-right: 1px solid #00000026
 
   &__button
     position: absolute
@@ -16,9 +18,33 @@
     padding: 5px
     transition: .2s
     color: #c1c1c1c7
-    opacity: .8
+    opacity: .95
     &:hover
-      color: black
+      color: #3a3a3a
       opacity: 1
 
   &__content
+    height: 100%
+    display: flex
+    justify-content: space-between
+    flex-direction: column
+    &-top
+      padding: 10px 0
+      box-shadow: -6px 1px 20px 0px #00000063
+
+    .user-info
+      display: flex
+      align-items: center
+      justify-content: space-around
+
+      &__avatar
+        max-width: 100px
+        img
+          border-radius: 50%
+          width: 100%
+      
+      &__bio
+
+        &-name
+          color: black
+        &-created
