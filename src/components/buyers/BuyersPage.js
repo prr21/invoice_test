@@ -4,7 +4,6 @@ import ShowBy from './ShowBy'
 import BuyersTable from './BuyersTable'
 import Pagination from '../pagination/Pagination'
 import dataBuyers from '../../data/buyers.json'
-window.d = dataBuyers
 
 export default function BuyersPage(){
 

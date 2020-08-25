@@ -1,11 +1,12 @@
 import React, { useState, createContext } from 'react';
-import { BrowserRouter as Router, Route } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 
 import Form from '../form/Form';
 import Sidebar from '../sidebar/Sidebar';
-import Cabinet from '../cabinet/Cabinet';
-import Buyers from '../buyers/Buyers';
-import Terminals from '../terminals/Terminals';
+import Main from '../main/Main';
+import BuyersPage from '../buyers/BuyersPage';
+import Buyer from '../buyers/Buyer';
+import Terminals from '../terminals/TerminalsPage';
 import './app.sass'
 
 export const UserContext = createContext()
@@ -56,22 +57,36 @@ function App() {
   return (
     <UserContext.Provider value={user}>
       <Router>
-        <Route component={sidebar}/>
 
-        <Route 
-          path="/" exact 
-          component={Cabinet}
-        />
+          <Route component={sidebar}/>
 
-        <Route path="/login" 
-          render={ () => 
-            <Form logged={user} logIn={logIn}/>
+        <Switch>
+
+          <Route 
+            path="/" exact 
+            component={Main}
+          />
+
+          <Route path="/login" 
+            render={ () => 
+              <Form logged={user} logIn={logIn}/>
+            }/>
+          
+          <Route path="/terminals" component={Terminals}/>
+
+          <Route path="/buyers/" exact component={BuyersPage}/>
+
+          <Route path='/buyers/:id' render={ ({ match }) => 
+            <Buyer itemId={ match.params.id } />
           }/>
-        
-        <Route path="/terminals" component={Terminals}/>
 
-        <Route path="/buyers/" component={Buyers}/>
-        
+          <Route render={ () => (
+            <div className="content-center">
+                <h3>404 – page not found</h3>
+            </div>
+          )}/>
+
+        </Switch>
       </Router>
     </UserContext.Provider>
   );

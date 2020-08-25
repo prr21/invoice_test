@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom';
 
-import { toCurrency } from '../../utils/currency'
+import { toCurrency } from '../../utils/convert'
 
 export default function BuyerRow({ buyer }){
 

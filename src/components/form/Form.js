@@ -9,8 +9,8 @@ function Form({ logged, logIn }){
   const [usernameStatus, setUsernameStatus] = useState({value: ''})
   const [passwordStatus, setPasswordStatus] = useState({value: ''})
 
-  const usernameInp = useRef(null)
-  const passwordInp = useRef(null)
+  let usernameInp = useRef(null)
+  let passwordInp = useRef(null)
 
   useEffect(() => {
     if (usernameStatus.exist) {
@@ -59,7 +59,11 @@ function Form({ logged, logIn }){
   if (logged) return <Redirect to="/"/>
   
   return (
-    <div className="content-center">
+    <div className="content-center justify-content-center">
+      <div className="mb-3">
+        <img src="https://hhcdn.ru/employer-logo/3247705.png" alt="invoice"/>
+      </div>
+
       <form className="form-signin" onSubmit={submitHandler}>
 
         <div className="form-group">

@@ -50,6 +50,7 @@ function Terminals(){
   return (
     
     <div className="container d-flex flex-column align-items-center mt-4">
+      
       <div className="col-5 mt-4">
         <TerminalForm 
           onSubmit={submbitHandler}

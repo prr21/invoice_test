@@ -2,9 +2,9 @@ import React, { useContext } from 'react'
 import { Redirect, Link } from 'react-router-dom'
 
 import { UserContext } from '../app/App'
-import './cabinet.sass'
+import './main.sass'
 
-export default function Cabinet() {
+export default function Main() {
   const user = useContext(UserContext)
 
   if (!user){
