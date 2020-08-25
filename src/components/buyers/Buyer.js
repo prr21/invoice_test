@@ -1,20 +1,10 @@
 import React from 'react'
+import './buyer.sass'
 
-function Buyer( props ){
-  const { id, name, averageCheck, buysCount, total } = props.buyer;
-console.log(props);
+export default function Buyer({ itemId }){
   return (
-    <tr>
-      <th className="table-light"
-        onClick={() => props.history.push(`buyers/${id}/`)}>
-          {id}
-      </th>
-      <td className="table-light">{name}</td>
-      <td className="table-light">{averageCheck}</td>
-      <td className="table-light">{buysCount}</td>
-      <td className="table-light">{total}</td>
-  </tr>
+    <div className="content-center">
+      <h1 className="display-1">{ itemId }</h1>
+    </div>
   )
 }
-
-export default Buyer
